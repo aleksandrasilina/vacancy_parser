@@ -55,6 +55,32 @@ class HeadHunterAPI(Parser):
             self.__vacancies[employer_id] = total_vacancies
 
     @property
+    def employers_ids(self):
+        """Геттер для employers_ids."""
+        return self.__employers_ids
+
+    @property
+    def employers_url(self):
+        """Геттер для employers_url."""
+        return self.__employers_url
+
+    @property
+    def vacancies_url(self):
+        """Геттер для vacancies_url."""
+
+        return self.__vacancies_url
+
+    @property
+    def headers(self):
+        """Геттер для headers"""
+        return self.__headers
+
+    @property
+    def params(self):
+        """Геттер для params"""
+        return self.__params
+
+    @property
     def vacancies(self):
         """Геттер для словаря вакансий"""
         return self.__vacancies
