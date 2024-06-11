@@ -89,18 +89,3 @@ class HeadHunterAPI(Parser):
     def employers(self):
         """Геттер для списка работодателей"""
         return self.__employers
-
-
-if __name__ == '__main__':
-    hh = HeadHunterAPI()
-
-    hh.load_employers()
-    # print(hh.employers)
-    hh.load_vacancies()
-    # print(hh.vacancies)
-
-    print([len(emp) for emp in hh.vacancies.values()])
-    # [51, 300, 24, 300, 130, 300, 188, 58, 300, 105]
-
-    print([e['open_vacancies'] for e in hh.employers])
-    # [684, 1315, 128, 8503, 8232, 460, 3635, 445, 3670, 753]
