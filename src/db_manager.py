@@ -8,12 +8,12 @@ class DBManager:
     def create_database(database_name: str, params: dict) -> None:
         """Создание базы данных для сохранения данных о работодателях и их вакансиях."""
 
-        conn = psycopg2.connect(dbname='postgres', **params)
+        conn = psycopg2.connect(dbname="postgres", **params)
         conn.autocommit = True
 
         with conn.cursor() as cur:
-            cur.execute(f'DROP DATABASE IF EXISTS {database_name}')
-            cur.execute(f'CREATE DATABASE {database_name}')
+            cur.execute(f"DROP DATABASE IF EXISTS {database_name}")
+            cur.execute(f"CREATE DATABASE {database_name}")
 
         conn.close()
 
@@ -23,7 +23,8 @@ class DBManager:
 
         with psycopg2.connect(**params) as conn:
             with conn.cursor() as cur:
-                cur.execute("""
+                cur.execute(
+                    """
                     CREATE TABLE employers (
                         employer_id INT PRIMARY KEY,                        
                         company_name VARCHAR(100) NOT NULL,
@@ -32,7 +33,8 @@ class DBManager:
                         url VARCHAR(50),
                         open_vacancies INT
                     )
-                """)
+                """
+                )
 
         conn.close()
 
@@ -42,7 +44,8 @@ class DBManager:
 
         with psycopg2.connect(**params) as conn:
             with conn.cursor() as cur:
-                cur.execute("""
+                cur.execute(
+                    """
                     CREATE TABLE vacancies (
                         vacancy_id INT PRIMARY KEY,
                         employer_id INT NOT NULL,                        
@@ -58,7 +61,8 @@ class DBManager:
                         employment VARCHAR(30),
                         FOREIGN KEY (employer_id) REFERENCES employers(employer_id)
                     )
-                """)
+                """
+                )
 
         conn.close()
 
@@ -72,8 +76,14 @@ class DBManager:
                 INSERT INTO employers (employer_id, company_name, region, hh_url, url, open_vacancies)
                 VALUES (%s, %s, %s, %s, %s, %s)
                 """,
-                (employer['id'], employer['name'], employer['area']['name'],
-                 employer['alternate_url'], employer['site_url'], employer['open_vacancies'])
+                (
+                    employer["id"],
+                    employer["name"],
+                    employer["area"]["name"],
+                    employer["alternate_url"],
+                    employer["site_url"],
+                    employer["open_vacancies"],
+                ),
             )
 
     @staticmethod
@@ -88,11 +98,20 @@ class DBManager:
                      salary_currency, vacancy_url, requirement, responsibility, schedule, experience, employment)
                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                     """,
-                    (vacancy.get('id'), employer_id, vacancy.get('name'), (vacancy.get('salary') or {}).get('from'),
-                     (vacancy.get('salary') or {}).get('to'), (vacancy.get('salary') or {}).get('currency'),
-                     vacancy.get('alternate_url'), vacancy.get('snippet').get('requirement'),
-                     vacancy.get('snippet').get('responsibility'), vacancy.get('schedule').get('name'),
-                     vacancy.get('experience').get('name'), vacancy.get('employment').get('name'))
+                    (
+                        vacancy.get("id"),
+                        employer_id,
+                        vacancy.get("name"),
+                        (vacancy.get("salary") or {}).get("from"),
+                        (vacancy.get("salary") or {}).get("to"),
+                        (vacancy.get("salary") or {}).get("currency"),
+                        vacancy.get("alternate_url"),
+                        vacancy.get("snippet").get("requirement"),
+                        vacancy.get("snippet").get("responsibility"),
+                        vacancy.get("schedule").get("name"),
+                        vacancy.get("experience").get("name"),
+                        vacancy.get("employment").get("name"),
+                    ),
                 )
 
     @staticmethod
@@ -112,8 +131,9 @@ class DBManager:
 
     @staticmethod
     def get_all_vacancies(cur) -> list[tuple]:
-        """Получает список всех вакансий с указанием названия компании, названия вакансии
-        и зарплаты и ссылки на вакансию.
+        """
+        Получает список всех вакансий с указанием названия компании, названия вакансии,
+        зарплаты и ссылки на вакансию.
         """
 
         cur.execute(

@@ -6,10 +6,12 @@ from src.head_hunter_api import HeadHunterAPI
 
 
 def main():
-    database_name = 'coursework_5'
+    database_name = "coursework_5"
     conn = None
 
-    user_keywords = input("Введите ключевые слова через пробел для вывода вакансий").lower().split()
+    user_keywords = (
+        input("Введите ключевые слова через пробел для вывода вакансий").lower().split()
+    )
 
     params = config()
     db_manager = DBManager()
@@ -20,7 +22,7 @@ def main():
     db_manager.create_database(database_name, params)
     print(f"БД {database_name} успешно создана")
 
-    params.update({'dbname': database_name})
+    params.update({"dbname": database_name})
 
     db_manager.create_employers_table(params)
     print("Таблица employers успешно создана")
@@ -40,8 +42,10 @@ def main():
                 print("Компании и количество вакансий:")
                 print(db_manager.get_companies_and_vacancies_count(cur))
 
-                print("Вакансии с указанием названия компании, "
-                      "названия вакансии, зарплаты и ссылки на вакансию:")
+                print(
+                    "Вакансии с указанием названия компании, "
+                    "названия вакансии, зарплаты и ссылки на вакансию:"
+                )
                 print(db_manager.get_all_vacancies(cur))
 
                 print("Средняя зарплата по вакансиям:")
@@ -60,5 +64,5 @@ def main():
             conn.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -1,9 +1,9 @@
-import pytest
 import psycopg2
+import pytest
 
-from src.head_hunter_api import HeadHunterAPI
-from src.db_manager import DBManager
 from config import config
+from src.db_manager import DBManager
+from src.head_hunter_api import HeadHunterAPI
 
 
 @pytest.fixture
@@ -23,77 +23,65 @@ def params():
 
 @pytest.fixture
 def params_with_db_name(params):
-    params.update({'dbname': 'coursework_5'})
+    params.update({"dbname": "coursework_5"})
     return params
 
 
 @pytest.fixture(autouse=True)
 def database(db_manager, params):
-    database_name = 'coursework_5'
+    database_name = "coursework_5"
     db_manager.create_database(database_name, params)
 
 
 @pytest.fixture
 def employers():
-    return [{
-        "id": 1,
-        "name": "employer_1",
-        "area": {
-            "name": "employer_1"
+    return [
+        {
+            "id": 1,
+            "name": "employer_1",
+            "area": {"name": "employer_1"},
+            "alternate_url": "employer_1",
+            "site_url": "employer_1",
+            "open_vacancies": 1,
         },
-        "alternate_url": "employer_1",
-        "site_url": "employer_1",
-        "open_vacancies": 1
-    },
         {
             "id": 2,
             "name": "employer_2",
-            "area": {
-                "name": "employer_2"
-            },
+            "area": {"name": "employer_2"},
             "alternate_url": "employer_2",
             "site_url": "employer_2",
-            "open_vacancies": 2
-        }
+            "open_vacancies": 2,
+        },
     ]
 
 
 @pytest.fixture
 def vacancies():
     return {
-        '1': [{
-            'id': 1,
-            'name': "vacancy_1",
-            "salary": {
-                "currency": "RUR",
-                "from": 30000,
-                "to": 50000
-            },
-            'alternate_url': 'vacancy_1',
-            'snippet': {'requirement': 'vacancy_1',
-                        'responsibility': 'vacancy_1'},
-            'schedule': {'id': 'remote', 'name': 'Удаленная работа'},
-            'experience': {'id': 'between1And3', 'name': 'От 1 года до 3 лет'},
-            'employment': {'id': 'full', 'name': 'Полная занятость'}
-
-        },
+        "1": [
             {
-                'id': 2,
-                'name': "vacancy_2",
-                "salary": {
-                    "currency": "RUR",
-                    "from": 50000,
-                    "to": 70000
-                },
-                'alternate_url': 'vacancy_2',
-                'snippet': {'requirement': 'vacancy_2',
-                            'responsibility': 'vacancy_2'},
-                'schedule': {'id': 'remote', 'name': 'Удаленная работа'},
-                'experience': {'id': 'between1And3', 'name': 'От 1 года до 3 лет'},
-                'employment': {'id': 'full', 'name': 'Полная занятость'}
-            }
+                "id": 1,
+                "name": "vacancy_1",
+                "salary": {"currency": "RUR", "from": 30000, "to": 50000},
+                "alternate_url": "vacancy_1",
+                "snippet": {"requirement": "vacancy_1", "responsibility": "vacancy_1"},
+                "schedule": {"id": "remote", "name": "Удаленная работа"},
+                "experience": {"id": "between1And3", "name": "От 1 года до 3 лет"},
+                "employment": {"id": "full", "name": "Полная занятость"},
+            },
+            {
+                "id": 2,
+                "name": "vacancy_2",
+                "salary": {"currency": "RUR", "from": 50000, "to": 70000},
+                "alternate_url": "vacancy_2",
+                "snippet": {"requirement": "vacancy_2", "responsibility": "vacancy_2"},
+                "schedule": {"id": "remote", "name": "Удаленная работа"},
+                "experience": {"id": "between1And3", "name": "От 1 года до 3 лет"},
+                "employment": {"id": "full", "name": "Полная занятость"},
+            },
         ]
     }
+
 
 @pytest.fixture()
 def database_with_tables(db_manager, params_with_db_name, employers, vacancies):
