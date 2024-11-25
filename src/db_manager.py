@@ -26,7 +26,7 @@ class DBManager:
                 cur.execute(
                     """
                     CREATE TABLE employers (
-                        employer_id INT PRIMARY KEY,                        
+                        employer_id INT PRIMARY KEY,
                         company_name VARCHAR(100) NOT NULL,
                         region VARCHAR(50) NOT NULL,
                         hh_url VARCHAR(50),
@@ -48,7 +48,7 @@ class DBManager:
                     """
                     CREATE TABLE vacancies (
                         vacancy_id INT PRIMARY KEY,
-                        employer_id INT NOT NULL,                        
+                        employer_id INT NOT NULL,
                         vacancy_name VARCHAR(100) NOT NULL,
                         salary_from INT,
                         salary_to INT,
