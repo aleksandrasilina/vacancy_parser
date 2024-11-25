@@ -10,7 +10,7 @@ def main():
     conn = None
 
     user_keywords = (
-        input("Введите ключевые слова через пробел для вывода вакансий").lower().split()
+        input("Введите ключевые слова через пробел для поиска вакансий").lower().split()
     )
 
     params = config()
