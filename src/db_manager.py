@@ -132,7 +132,7 @@ class DBManager:
     @staticmethod
     def get_all_vacancies(cur) -> list[tuple]:
         """
-        Получает список всех вакансий с указанием названия компании, названия вакансии,
+        Получает список 10 вакансий с указанием названия компании, названия вакансии,
         зарплаты и ссылки на вакансию.
         """
 
@@ -142,6 +142,7 @@ class DBManager:
             v.salary_to, v.salary_currency, v.vacancy_url
             FROM employers e
             JOIN vacancies v USING(employer_id)
+            LIMIT 10
             """
         )
 
@@ -164,12 +165,13 @@ class DBManager:
 
     @staticmethod
     def get_vacancies_with_higher_salary(cur) -> list[tuple]:
-        """Получает список всех вакансий, у которых зарплата выше средней по всем вакансиям."""
+        """Получает список 10 вакансий, у которых зарплата выше средней по всем вакансиям."""
 
         cur.execute(
             """
             SELECT * FROM vacancies
             WHERE salary_from > (SELECT AVG(salary_from) FROM vacancies)
+            LIMIT 10
             """
         )
 
@@ -177,7 +179,7 @@ class DBManager:
 
     @staticmethod
     def get_vacancies_with_keyword(cur, user_keywords: list[str]):
-        """Получает список всех вакансий, в названии которых содержатся переданные в метод слова."""
+        """Получает список 10 вакансий, в названии которых содержатся переданные в метод слова."""
 
         vacancies = []
         for keyword in user_keywords:
@@ -185,6 +187,7 @@ class DBManager:
                 f"""
                 SELECT * FROM vacancies
                 WHERE vacancy_name LIKE '%{keyword}%'
+                LIMIT 10
                 """
             )
 
