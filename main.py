@@ -1,4 +1,7 @@
+from pprint import pprint
+
 import psycopg2
+from termcolor import colored
 
 from config import config
 from src.db_manager import DBManager
@@ -39,23 +42,31 @@ def main():
                 db_manager.insert_vacancies_data(cur, hh_api.vacancies)
                 print("Таблица vacancies успешно заполнена")
 
-                print("Компании и количество вакансий:")
-                print(db_manager.get_companies_and_vacancies_count(cur))
+                print(colored("Компании и количество вакансий:", "green"))
+                pprint(db_manager.get_companies_and_vacancies_count(cur))
 
                 print(
-                    "Вакансии с указанием названия компании, "
-                    "названия вакансии, зарплаты и ссылки на вакансию:"
+                    colored(
+                        "Вакансии с указанием названия компании, "
+                        "названия вакансии, зарплаты и ссылки на вакансию:",
+                        "green",
+                    )
                 )
-                print(db_manager.get_all_vacancies(cur))
+                pprint(db_manager.get_all_vacancies(cur))
 
-                print("Средняя зарплата по вакансиям:")
-                print(db_manager.get_avg_salary(cur))
+                print(colored("Средняя зарплата по вакансиям:", "green"))
+                pprint(db_manager.get_avg_salary(cur))
 
-                print("Вакансии, у которых зарплата выше средней:")
-                print(db_manager.get_vacancies_with_higher_salary(cur))
+                print(colored("Вакансии, у которых зарплата выше средней:", "green"))
+                pprint(db_manager.get_vacancies_with_higher_salary(cur))
 
-                print("Вакансии, в названии которых содержатся ключевые слова:")
-                print(db_manager.get_vacancies_with_keyword(cur, user_keywords))
+                print(
+                    colored(
+                        "Вакансии, в названии которых содержатся ключевые слова:",
+                        "green",
+                    )
+                )
+                pprint(db_manager.get_vacancies_with_keyword(cur, user_keywords))
 
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
